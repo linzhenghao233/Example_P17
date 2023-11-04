@@ -23,7 +23,7 @@ int insert(sequenlist* L, datatype x, int i) {
 		for (j = L->last; j >= i; j--)
 			L->data[j + 1] = L->data[j];
 		L->data[i] = x;
-		L->data = L->last + 1;
+		L->last = L->last + 1;
 	}
 	return (1);
 }
@@ -69,4 +69,44 @@ void printout(sequenlist* L) {
 		printf("data[%d] = ", i);
 		printf("%c\n", L->data[i]);
 	}
+}
+
+int main(void) {
+	sequenlist* L;
+	char cmd, x;
+	int i;
+
+	L = (sequenlist*)malloc(sizeof(sequenlist));
+	creatlist(L);
+	printout(L);
+	do {
+		printf("i,I...插入\n");
+		printf("d,D...删除\n");
+		printf("q,Q...退出\n");
+		do{
+			fflush(stdin);
+			scanf_s("%c", &cmd);
+		} while ((cmd != 'd') && (cmd != 'D') && (cmd != 'q') && (cmd != 'Q') && (cmd != 'i') && (cmd != 'I'));
+
+		switch (cmd) {
+		case 'i':
+		case 'I':
+			printf("请输入你要插入的数据：");
+			fflush(stdin);
+			scanf_s("%c", &x);
+			printf("请输入你要插入的位置：");
+			scanf_s("%d", &i);
+			insert(L, x, i);
+			printout(L);
+			break;
+		case'd':
+		case'D':
+			printf("请输入你要删除元素的位置：");
+			fflush(stdin);
+			scanf_s("%d", &i);
+			dellist(L, i);
+			printout(L);
+			break;
+		}
+	} while ((cmd != 'q') && (cmd != 'Q'));
 }
